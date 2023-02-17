@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import {
   Alert,
-  AppBar,
   Box,
   Button,
   Checkbox,
@@ -15,10 +14,6 @@ import {
   Paper,
   Select,
   Snackbar,
-  SpeedDial,
-  SpeedDialAction,
-  SpeedDialIcon,
-  Stack,
   Table,
   TableBody,
   TableCell,
@@ -282,15 +277,6 @@ function Home(profiles) {
     severity: "success",
   });
 
-  const handlesnackOpen = () => {
-    setsnackOpen({
-      state: true,
-      message: "",
-      stateColor: "unset",
-      severity: "success",
-    });
-  };
-
   const handlesnackClose = (event, reason) => {
     if (reason === "clickaway") {
       return;
@@ -387,7 +373,7 @@ function Home(profiles) {
             background: "rgb(247,247,247)",
           }}
         >
-          <Table sx={{ maxHeight: "90vh", overflow: "hidden" }}>
+          <Table sx={{ maxHeight: "90vh", overflow: "hidden" }} >
             {/* head */}
             <TableHead>
               <TableRow>
