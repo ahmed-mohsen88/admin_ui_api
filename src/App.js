@@ -1,24 +1,31 @@
-import logo from './logo.svg';
-import './App.css';
-
+import "./App.css";
+import { Routes, Route } from "react-router-dom";
+import axios from "axios";
+import Home from "./Home";
+import { useEffect, useState } from "react";
+import { Provider } from "react-redux";
+import store from "./store";
 function App() {
+  const [profiles, setprofiles] = useState([]);
+
+  const getData = async () => {
+    const resp = await axios.get(
+      "https://geektrust.s3-ap-southeast-1.amazonaws.com/adminui-problem/members.json"
+    );
+    setprofiles(resp.data);
+  };
+  useEffect(() => {
+    getData();
+  }, []);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <Provider store={store}>
+        <Routes>
+          <Route path="/" element={<Home profiles={profiles} />} />
+        </Routes>
+      </Provider>
+    </>
   );
 }
 
