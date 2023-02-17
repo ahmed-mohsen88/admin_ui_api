@@ -154,7 +154,8 @@ function Home(profiles) {
     setsnackOpen({
       state: true,
       message: `1 member deleted `,
-      stateColor: "rgb(211,47,47)",
+      stateColor: "#ed5249",
+      severity: "error",
     });
   };
 
@@ -218,8 +219,8 @@ function Home(profiles) {
       message: `${arr.length} members deleted (${arr.map((el) => {
         return el.name + " ";
       })})`,
-      stateColor: "#d32f2f",
-      severity: "success",
+      stateColor: "#ed5249",
+      severity: "error",
     });
   };
 
@@ -244,31 +245,40 @@ function Home(profiles) {
     setOpenADD(true);
   };
   const handelAddsubmit = () => {
-    const addedUser = [...usersSelector];
-    const arrLength = addedUser.length + 1;
-    addedUser.push({
-      id: `${arrLength}`,
-      name: handelInput.name,
-      email: handelInput.email,
-      role: handelInput.role,
-    });
-    dispatch(setUsers({ profiles: addedUser }));
-    sethandelInput({
-      id: usersSelector.length + 1,
-      name: "",
-      email: "",
-      role: "",
-    });
-    setOpenADD(false);
-    setsnackOpen({
-      state: true,
-      message: "Successfully Added",
-      stateColor: "rgb(34,183,121)",
-      severity: "success",
-    });
+    if (!handelInput.name || !handelInput.email || !handelInput.name.role) {
+      setsnackOpen({
+        state: true,
+        message: "All fields should be filled",
+        stateColor: "#f7c600",
+        severity: "warning",
+      });
+    } else {
+      const addedUser = [...usersSelector];
+      const arrLength = addedUser.length + 1;
+      addedUser.push({
+        id: `${arrLength}`,
+        name: handelInput.name,
+        email: handelInput.email,
+        role: handelInput.role,
+      });
+      dispatch(setUsers({ profiles: addedUser }));
+      sethandelInput({
+        id: usersSelector.length + 1,
+        name: "",
+        email: "",
+        role: "",
+      });
+      setOpenADD(false);
+      setsnackOpen({
+        state: true,
+        message: "Successfully Added",
+        stateColor: "rgb(34,183,121)",
+        severity: "success",
+      });
+    }
   };
 
-  // ### snacck bar
+  // ### snack bar
 
   const [snackOpen, setsnackOpen] = React.useState({
     state: false,
@@ -373,7 +383,7 @@ function Home(profiles) {
             background: "rgb(247,247,247)",
           }}
         >
-          <Table sx={{ maxHeight: "90vh", overflow: "hidden" }} >
+          <Table sx={{ maxHeight: "90vh", overflow: "hidden" }}>
             {/* head */}
             <TableHead>
               <TableRow>
