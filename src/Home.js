@@ -245,7 +245,7 @@ function Home(profiles) {
     setOpenADD(true);
   };
   const handelAddsubmit = () => {
-    if (!handelInput.name || !handelInput.email || !handelInput.name.role) {
+    if (!handelInput.name || !handelInput.email || !handelInput.role) {
       setsnackOpen({
         state: true,
         message: "All fields should be filled",
@@ -301,403 +301,408 @@ function Home(profiles) {
   };
 
   return (
-    <Container
-      sx={{
-        padding: "30px",
-        background: "linear-gradient(45deg, rgb(88, 84, 236), transparent)",
-      }}
-    >
-      {/* navbar */}
-      <Paper variant="outlined">
-        <Container style={{ background: "black", color: "white" }}>
-          <Toolbar
-            sx={{
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
-            }}
-          >
-            <Grid justifyContent={"center"} textAlign={"center"}>
-              <Typography variant="h4">Admin Dashboard</Typography>
-            </Grid>
-            <AccountCircle fontSize="large" />
-          </Toolbar>
-        </Container>
-      </Paper>
-      {/* search section */}
-      <Paper variant="outlined">
-        <Grid
-          display={"flex"}
-          alignItems={"center"}
-          justifyContent={"space-between"}
-          padding={"20px"}
-          sx={{
-            background: "rgb(247,247,247)",
-          }}
-        >
-          <Button
-            style={{
-              backgroundColor: "rgb(88,84,236)",
-            }}
-            variant="contained"
-            onClick={(e) => handelAdd(e)}
-          >
-            Add member
-          </Button>
-          <Snackbar
-            anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
-            open={snackOpen.state}
-            autoHideDuration={6000}
-            onClose={handlesnackClose}
-            message={snackOpen.message}
-            // color={snackOpen.stateColor}
-          >
-            <Alert
-              onClose={handlesnackClose}
+    <main>
+      <Container
+        sx={{
+          padding: "30px",
+          background: "linear-gradient(45deg, rgb(88, 84, 236), transparent)",
+        }}
+      >
+        {/* navbar */}
+        <Paper variant="outlined">
+          <Container style={{ background: "black", color: "white" }}>
+            <Toolbar
               sx={{
-                width: "100%",
-                background: snackOpen.stateColor,
-                color: "white",
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
               }}
-              severity={snackOpen.severity}
             >
-              {snackOpen.message}
-            </Alert>
-          </Snackbar>
-
-          <Input
-            startAdornment={<SearchIcon color={"action"} />}
-            placeholder="Search By Name, Email and role"
-            sx={{ width: "24%" }}
-            onChange={(e) => {
-              handelSearch(e);
-            }}
-          />
-        </Grid>
-      </Paper>
-
-      {/* table */}
-      <Paper variant="outlined">
-        <TableContainer
-          sx={{
-            background: "rgb(247,247,247)",
-          }}
-        >
-          <Table sx={{ maxHeight: "90vh", overflow: "hidden" }}>
-            {/* head */}
-            <TableHead>
-              <TableRow>
-                <TableCell></TableCell>
-                <TableCell variant="head">
-                  <Typography variant="h5">Name</Typography>
-                </TableCell>
-                <TableCell>
-                  <Typography variant="h5">Email</Typography>
-                </TableCell>
-                <TableCell>
-                  <Typography variant="h5">Role</Typography>
-                </TableCell>
-                <TableCell sx={{ textAlign: "center" }}>
-                  <Typography variant="h5">Action</Typography>
-                </TableCell>
-              </TableRow>
-            </TableHead>
-            {/* body */}
-            <TableBody>
-              {usersSelector ? (
-                usersSelector
-                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                  .map((profile, index) => {
-                    return (
-                      <TableRow key={profile?.id} id={profile?.email}>
-                        <TableCell>
-                          <Checkbox
-                            checked={checkedState[index] || false}
-                            onChange={(e) => {
-                              handelCheckBox(e, index);
-                            }}
-                          ></Checkbox>
-                        </TableCell>
-                        {edit.case && edit.name === profile.name ? (
-                          <form>
-                            <TextField type="text" placeholder="change Name" />
-                          </form>
-                        ) : (
-                          <TableCell>{profile?.name}</TableCell>
-                        )}
-                        <TableCell>{profile?.email}</TableCell>
-                        <TableCell>{profile?.role} </TableCell>
-                        <TableCell>
-                          <Grid
-                            sx={{
-                              display: "flex",
-                              justifyContent: "center",
-                              gap: "10px",
-                              height: "100%",
-                            }}
-                          >
-                            <Button
-                              aria-label={profile?.name}
-                              onClick={(e) => {
-                                handelDelete(e);
-                              }}
-                            >
-                              <DeleteIcon color="error" />
-                            </Button>
-                            <Button
-                              aria-label={profile?.email}
-                              onClick={(e) => {
-                                handelEdit(e);
-                              }}
-                            >
-                              <EditIcon
-                                sx={{
-                                  color: "rgb(34,183,121)",
-                                }}
-                              />
-                            </Button>
-                          </Grid>
-                        </TableCell>
-                      </TableRow>
-                    );
-                  })
-              ) : (
-                <TableRow></TableRow>
-              )}
-              {emptyRows > 0 && (
-                <TableRow
-                  style={{
-                    height: 33 * emptyRows,
-                  }}
-                >
-                  <TableCell colSpan={6} />
-                </TableRow>
-              )}
-            </TableBody>
-          </Table>
-          {/* end */}
-        </TableContainer>
-
-        <Container sx={{ padding: "20px", background: "rgb(247,247,247)" }}>
+              <Grid justifyContent={"center"} textAlign={"center"}>
+                <Typography variant="h4">Admin Dashboard</Typography>
+              </Grid>
+              <AccountCircle fontSize="large" />
+            </Toolbar>
+          </Container>
+        </Paper>
+        {/* search section */}
+        <Paper variant="outlined">
           <Grid
-            container
-            justifyContent={"space-between"}
+            display={"flex"}
             alignItems={"center"}
+            justifyContent={"space-between"}
+            padding={"20px"}
+            sx={{
+              background: "rgb(247,247,247)",
+            }}
           >
-            <Grid item={true}>
-              <Button
-                variant="contained"
-                color="error"
-                onClick={(e) => {
-                  handelDeleteAll(e);
+            <Button
+              style={{
+                backgroundColor: "rgb(88,84,236)",
+              }}
+              variant="contained"
+              onClick={(e) => handelAdd(e)}
+            >
+              Add member
+            </Button>
+            <Snackbar
+              anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+              open={snackOpen.state}
+              autoHideDuration={6000}
+              onClose={handlesnackClose}
+              message={snackOpen.message}
+              // color={snackOpen.stateColor}
+            >
+              <Alert
+                onClose={handlesnackClose}
+                sx={{
+                  width: "100%",
+                  background: snackOpen.stateColor,
+                  color: "white",
                 }}
+                severity={snackOpen.severity}
               >
-                Delete Selected
-              </Button>
-            </Grid>
+                {snackOpen.message}
+              </Alert>
+            </Snackbar>
+
+            <Input
+              startAdornment={<SearchIcon color={"action"} />}
+              placeholder="Search By Name, Email and role"
+              sx={{ width: "24%" }}
+              onChange={(e) => {
+                handelSearch(e);
+              }}
+            />
+          </Grid>
+        </Paper>
+
+        {/* table */}
+        <Paper variant="outlined">
+          <TableContainer
+            sx={{
+              background: "rgb(247,247,247)",
+            }}
+          >
+            <Table sx={{ maxHeight: "90vh", overflow: "hidden" }}>
+              {/* head */}
+              <TableHead>
+                <TableRow>
+                  <TableCell></TableCell>
+                  <TableCell variant="head">
+                    <Typography variant="h5">Name</Typography>
+                  </TableCell>
+                  <TableCell>
+                    <Typography variant="h5">Email</Typography>
+                  </TableCell>
+                  <TableCell>
+                    <Typography variant="h5">Role</Typography>
+                  </TableCell>
+                  <TableCell sx={{ textAlign: "center" }}>
+                    <Typography variant="h5">Action</Typography>
+                  </TableCell>
+                </TableRow>
+              </TableHead>
+              {/* body */}
+              <TableBody>
+                {usersSelector ? (
+                  usersSelector
+                    .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                    .map((profile, index) => {
+                      return (
+                        <TableRow key={profile?.id} id={profile?.email}>
+                          <TableCell>
+                            <Checkbox
+                              checked={checkedState[index] || false}
+                              onChange={(e) => {
+                                handelCheckBox(e, index);
+                              }}
+                            ></Checkbox>
+                          </TableCell>
+                          {edit.case && edit.name === profile.name ? (
+                            <form>
+                              <TextField
+                                type="text"
+                                placeholder="change Name"
+                              />
+                            </form>
+                          ) : (
+                            <TableCell>{profile?.name}</TableCell>
+                          )}
+                          <TableCell>{profile?.email}</TableCell>
+                          <TableCell>{profile?.role} </TableCell>
+                          <TableCell>
+                            <Grid
+                              sx={{
+                                display: "flex",
+                                justifyContent: "center",
+                                gap: "10px",
+                                height: "100%",
+                              }}
+                            >
+                              <Button
+                                aria-label={profile?.name}
+                                onClick={(e) => {
+                                  handelDelete(e);
+                                }}
+                              >
+                                <DeleteIcon color="error" />
+                              </Button>
+                              <Button
+                                aria-label={profile?.email}
+                                onClick={(e) => {
+                                  handelEdit(e);
+                                }}
+                              >
+                                <EditIcon
+                                  sx={{
+                                    color: "rgb(34,183,121)",
+                                  }}
+                                />
+                              </Button>
+                            </Grid>
+                          </TableCell>
+                        </TableRow>
+                      );
+                    })
+                ) : (
+                  <TableRow></TableRow>
+                )}
+                {emptyRows > 0 && (
+                  <TableRow
+                    style={{
+                      height: 33 * emptyRows,
+                    }}
+                  >
+                    <TableCell colSpan={6} />
+                  </TableRow>
+                )}
+              </TableBody>
+            </Table>
+            {/* end */}
+          </TableContainer>
+
+          <Container sx={{ padding: "20px", background: "rgb(247,247,247)" }}>
             <Grid
-              item={true}
-              display={"flex"}
-              justifyContent={"center"}
+              container
+              justifyContent={"space-between"}
               alignItems={"center"}
             >
-              <TablePagination
-                rowsPerPageOptions={[5, 10, 25]}
-                component="div"
-                count={usersSelector.length}
-                rowsPerPage={rowsPerPage}
-                page={page}
-                onPageChange={handleChangePage}
-                onRowsPerPageChange={handleChangeRowsPerPage}
-              />
-            </Grid>
-            <Grid display={"flex"} gap={"10px"}>
-              <Chip
-                sx={{
-                  backgroundColor: "rgb(34,183,121)",
-                  color: "white",
-                  width: "100px",
-                }}
-                label={`Admin ${
-                  usersSelector.filter((el) => {
-                    return el.role === "admin";
-                  }).length
-                }`}
-              />
-              <Chip
-                sx={{
-                  backgroundColor: "rgb(34,183,121)",
-                  color: "white",
-                  width: "100px",
-                }}
-                label={`Member ${
-                  usersSelector.filter((el) => {
-                    return el.role === "member";
-                  }).length
-                }`}
-              />
-            </Grid>
-          </Grid>
-        </Container>
-      </Paper>
-      {/* <Button onClick={handleOpen}>Open modal</Button> */}
-      <Modal
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
-        <Box
-          sx={{
-            position: "absolute",
-            top: "50%",
-            left: "50%",
-            transform: "translate(-50%, -50%)",
-            width: 500,
-            height: 400,
-            bgcolor: "background.paper",
-            border: "2px solid #000",
-            boxShadow: 24,
-            p: 4,
-          }}
-        >
-          <Container
-            sx={{
-              padding: "20px",
-              width: "100%",
-              height: "100%",
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "space-between",
-            }}
-          >
-            <Grid>
-              <InputLabel>Edit Name</InputLabel>
-              <Input
-                type="text"
-                sx={{ width: "100%" }}
-                value={handelInput.name}
-                onChange={(e, name) => handelModalChange(e, "name")}
-              />
-            </Grid>
-            <Grid>
-              <InputLabel>Edit Email</InputLabel>
-              <Input
-                type="text"
-                sx={{ width: "100%" }}
-                value={handelInput.email}
-                onChange={(e, email) => handelModalChange(e, "email")}
-              />
-            </Grid>
-            <Grid>
-              <InputLabel>Edit role</InputLabel>
-              <Select
-                sx={{ width: "100%" }}
-                value={handelInput.role}
-                onChange={(e, role) => handelModalChange(e, "role")}
+              <Grid item={true}>
+                <Button
+                  variant="contained"
+                  color="error"
+                  onClick={(e) => {
+                    handelDeleteAll(e);
+                  }}
+                >
+                  Delete Selected
+                </Button>
+              </Grid>
+              <Grid
+                item={true}
+                display={"flex"}
+                justifyContent={"center"}
+                alignItems={"center"}
               >
-                <MenuItem value={"member"}>Member</MenuItem>
-                <MenuItem value={"admin"}>Admin</MenuItem>
-              </Select>
-            </Grid>
-            <Grid justifyContent={"space-between"} display={"flex"}>
-              <Button
-                onClick={(e) => {
-                  handelsubmit(e);
-                }}
-                color="success"
-                variant="contained"
-              >
-                Submit
-              </Button>
-              <Button
-                variant="contained"
-                color="error"
-                onClick={() => setOpen(false)}
-              >
-                Cancel
-              </Button>
+                <TablePagination
+                  rowsPerPageOptions={[5, 10, 25]}
+                  component="div"
+                  count={usersSelector.length}
+                  rowsPerPage={rowsPerPage}
+                  page={page}
+                  onPageChange={handleChangePage}
+                  onRowsPerPageChange={handleChangeRowsPerPage}
+                />
+              </Grid>
+              <Grid display={"flex"} gap={"10px"}>
+                <Chip
+                  sx={{
+                    backgroundColor: "rgb(34,183,121)",
+                    color: "white",
+                    width: "100px",
+                  }}
+                  label={`Admin ${
+                    usersSelector.filter((el) => {
+                      return el.role === "admin";
+                    }).length
+                  }`}
+                />
+                <Chip
+                  sx={{
+                    backgroundColor: "rgb(34,183,121)",
+                    color: "white",
+                    width: "100px",
+                  }}
+                  label={`Member ${
+                    usersSelector.filter((el) => {
+                      return el.role === "member";
+                    }).length
+                  }`}
+                />
+              </Grid>
             </Grid>
           </Container>
-        </Box>
-      </Modal>
-      {/* add member modal */}
-      <Modal open={openADD} onClose={() => setOpenADD(false)}>
-        <Box
-          sx={{
-            position: "absolute",
-            top: "50%",
-            left: "50%",
-            transform: "translate(-50%, -50%)",
-            width: 500,
-            height: 400,
-            bgcolor: "background.paper",
-            border: "2px solid #000",
-            boxShadow: 24,
-            p: 4,
-          }}
+        </Paper>
+        {/* <Button onClick={handleOpen}>Open modal</Button> */}
+        <Modal
+          open={open}
+          onClose={handleClose}
+          aria-labelledby="modal-modal-title"
+          aria-describedby="modal-modal-description"
         >
-          <Container
+          <Box
             sx={{
-              padding: "20px",
-              width: "100%",
-              height: "100%",
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "space-between",
+              position: "absolute",
+              top: "50%",
+              left: "50%",
+              transform: "translate(-50%, -50%)",
+              width: 500,
+              height: 400,
+              bgcolor: "background.paper",
+              border: "2px solid #000",
+              boxShadow: 24,
+              p: 4,
             }}
           >
-            <Grid>
-              <InputLabel>Edit Name</InputLabel>
-              <Input
-                type="text"
-                sx={{ width: "100%" }}
-                value={handelInput.name}
-                onChange={(e, name) => handelModalChange(e, "name")}
-              />
-            </Grid>
-            <Grid>
-              <InputLabel>Edit Email</InputLabel>
-              <Input
-                type="text"
-                sx={{ width: "100%" }}
-                value={handelInput.email}
-                onChange={(e, email) => handelModalChange(e, "email")}
-              />
-            </Grid>
-            <Grid>
-              <InputLabel>Edit role</InputLabel>
-              <Select
-                sx={{ width: "100%" }}
-                value={handelInput.role}
-                onChange={(e, role) => handelModalChange(e, "role")}
-              >
-                <MenuItem value={"member"}>Member</MenuItem>
-                <MenuItem value={"admin"}>Admin</MenuItem>
-              </Select>
-            </Grid>
-            <Grid justifyContent={"space-between"} display={"flex"}>
-              <Button
-                onClick={(e) => {
-                  handelAddsubmit(e);
-                }}
-                color="success"
-                variant="contained"
-              >
-                Add
-              </Button>
-              <Button
-                variant="contained"
-                color="error"
-                onClick={() => setOpenADD(false)}
-              >
-                Cancel
-              </Button>
-            </Grid>
-          </Container>
-        </Box>
-      </Modal>
-    </Container>
+            <Container
+              sx={{
+                padding: "20px",
+                width: "100%",
+                height: "100%",
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "space-between",
+              }}
+            >
+              <Grid>
+                <InputLabel>Edit Name</InputLabel>
+                <Input
+                  type="text"
+                  sx={{ width: "100%" }}
+                  value={handelInput.name}
+                  onChange={(e, name) => handelModalChange(e, "name")}
+                />
+              </Grid>
+              <Grid>
+                <InputLabel>Edit Email</InputLabel>
+                <Input
+                  type="text"
+                  sx={{ width: "100%" }}
+                  value={handelInput.email}
+                  onChange={(e, email) => handelModalChange(e, "email")}
+                />
+              </Grid>
+              <Grid>
+                <InputLabel>Edit role</InputLabel>
+                <Select
+                  sx={{ width: "100%" }}
+                  value={handelInput.role}
+                  onChange={(e, role) => handelModalChange(e, "role")}
+                >
+                  <MenuItem value={"member"}>Member</MenuItem>
+                  <MenuItem value={"admin"}>Admin</MenuItem>
+                </Select>
+              </Grid>
+              <Grid justifyContent={"space-between"} display={"flex"}>
+                <Button
+                  onClick={(e) => {
+                    handelsubmit(e);
+                  }}
+                  color="success"
+                  variant="contained"
+                >
+                  Submit
+                </Button>
+                <Button
+                  variant="contained"
+                  color="error"
+                  onClick={() => setOpen(false)}
+                >
+                  Cancel
+                </Button>
+              </Grid>
+            </Container>
+          </Box>
+        </Modal>
+        {/* add member modal */}
+        <Modal open={openADD} onClose={() => setOpenADD(false)}>
+          <Box
+            sx={{
+              position: "absolute",
+              top: "50%",
+              left: "50%",
+              transform: "translate(-50%, -50%)",
+              width: 500,
+              height: 400,
+              bgcolor: "background.paper",
+              border: "2px solid #000",
+              boxShadow: 24,
+              p: 4,
+            }}
+          >
+            <Container
+              sx={{
+                padding: "20px",
+                width: "100%",
+                height: "100%",
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "space-between",
+              }}
+            >
+              <Grid>
+                <InputLabel>Name</InputLabel>
+                <Input
+                  type="text"
+                  sx={{ width: "100%" }}
+                  value={handelInput.name}
+                  onChange={(e, name) => handelModalChange(e, "name")}
+                />
+              </Grid>
+              <Grid>
+                <InputLabel>Email</InputLabel>
+                <Input
+                  type="text"
+                  sx={{ width: "100%" }}
+                  value={handelInput.email}
+                  onChange={(e, email) => handelModalChange(e, "email")}
+                />
+              </Grid>
+              <Grid>
+                <InputLabel>role</InputLabel>
+                <Select
+                  sx={{ width: "100%" }}
+                  value={handelInput.role}
+                  onChange={(e, role) => handelModalChange(e, "role")}
+                >
+                  <MenuItem value={"member"}>Member</MenuItem>
+                  <MenuItem value={"admin"}>Admin</MenuItem>
+                </Select>
+              </Grid>
+              <Grid justifyContent={"space-between"} display={"flex"}>
+                <Button
+                  onClick={(e) => {
+                    handelAddsubmit(e);
+                  }}
+                  color="success"
+                  variant="contained"
+                >
+                  Add
+                </Button>
+                <Button
+                  variant="contained"
+                  color="error"
+                  onClick={() => setOpenADD(false)}
+                >
+                  Cancel
+                </Button>
+              </Grid>
+            </Container>
+          </Box>
+        </Modal>
+      </Container>
+    </main>
   );
 }
 
