@@ -69,6 +69,9 @@ function SearchSection({
           }}
           variant="contained"
           onClick={(e) => handelAdd(e)}
+          sx={{
+            fontSize: { xs: "10px", md: "15px" },
+          }}
         >
           Add member
         </Button>
@@ -76,7 +79,10 @@ function SearchSection({
         <Input
           startAdornment={<SearchIcon color={"action"} />}
           placeholder="Search By Name, Email and role"
-          sx={{ width: "24%" }}
+          sx={{
+            width: { md: "24%", xs: "50%" },
+            fontSize: { xs: "7px", md: "15px" },
+          }}
           onChange={(e) => {
             handelSearch(e);
           }}

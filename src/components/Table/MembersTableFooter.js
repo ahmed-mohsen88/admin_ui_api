@@ -47,6 +47,9 @@ function MembersTableFooter({
             onClick={(e) => {
               handelDeleteAll(e);
             }}
+            sx={{
+              fontSize: { xs: "10px", md: "15px" },
+            }}
           >
             Delete Selected
           </Button>
@@ -65,24 +68,30 @@ function MembersTableFooter({
             page={!usersSelector.length || usersSelector.length <= 0 ? 0 : page}
             onPageChange={handleChangePage}
             onRowsPerPageChange={handleChangeRowsPerPage}
+            size="small"
+            sx={{
+              overflowX: "hidden",
+            }}
           />
         </Grid>
         <Grid display={"flex"} gap={"10px"}>
           <Chip
             sx={{
+              fontSize: { xs: "10px", md: "15px" },
               backgroundColor: "rgb(34,183,121)",
               color: "white",
-              width: "100px",
+              width: { xs: "75px", md: "100px" },
             }}
             label={`Admin ${getCount(usersSelector, "role", "admin")}`}
           />
           <Chip
             sx={{
+              fontSize: { xs: "10px", md: "15px" },
               backgroundColor: "rgb(34,183,121)",
               color: "white",
-              width: "100px",
+              width: { xs: "75px", md: "100px" },
             }}
-            label={`Admin ${getCount(usersSelector, "role", "member")}`}
+            label={`Member ${getCount(usersSelector, "role", "member")}`}
           />
         </Grid>
       </Grid>

@@ -60,17 +60,12 @@ function MemberTableBody({
                     onChange={(e) => {
                       handelCheckBox(e, index);
                     }}
+                    size="small"
                   ></Checkbox>
                 </TableCell>
-                {edit.case && edit.name === profile.name ? (
-                  <form>
-                    <TextField type="text" placeholder="change Name" />
-                  </form>
-                ) : (
-                  <TableCell>{profile?.name}</TableCell>
-                )}
-                <TableCell>{profile?.email}</TableCell>
-                <TableCell>{profile?.role} </TableCell>
+                <StyledCell>{profile?.name}</StyledCell>
+                <StyledCell>{profile?.email}</StyledCell>
+                <StyledCell>{profile?.role} </StyledCell>
                 <TableCell>
                   <Grid
                     sx={{
@@ -86,7 +81,12 @@ function MemberTableBody({
                         handelDelete(e);
                       }}
                     >
-                      <DeleteIcon color="error" />
+                      <DeleteIcon
+                        color="error"
+                        sx={{
+                          fontSize: { xs: "20px", md: "25px" },
+                        }}
+                      />
                     </Button>
                     <Button
                       aria-label={profile?.email}
@@ -97,6 +97,7 @@ function MemberTableBody({
                       <EditIcon
                         sx={{
                           color: "rgb(34,183,121)",
+                          fontSize: { xs: "20px", md: "25px" },
                         }}
                       />
                     </Button>
@@ -117,5 +118,15 @@ function MemberTableBody({
     </TableBody>
   );
 }
-
+const StyledCell = (props) => {
+  return (
+    <TableCell
+      sx={{
+        fontSize: { xs: "10px", md: "15px" },
+      }}
+    >
+      {props.children}{" "}
+    </TableCell>
+  );
+};
 export default MemberTableBody;

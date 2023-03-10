@@ -6,21 +6,30 @@ function MemberTableHead() {
     <TableHead>
       <TableRow>
         <TableCell></TableCell>
-        <TableCell variant="head">
-          <Typography variant="h5">Name</Typography>
-        </TableCell>
-        <TableCell>
-          <Typography variant="h5">Email</Typography>
-        </TableCell>
-        <TableCell>
-          <Typography variant="h5">Role</Typography>
-        </TableCell>
+        <StyledCell>Name</StyledCell>
+        <StyledCell>Email</StyledCell>
+        <StyledCell>Role</StyledCell>
         <TableCell sx={{ textAlign: "center" }}>
-          <Typography variant="h5">Action</Typography>
+          <Typography
+            variant="h5"
+            sx={{ fontSize: { xs: "10px", md: "20px" } }}
+          >
+            Action
+          </Typography>
         </TableCell>
       </TableRow>
     </TableHead>
   );
 }
+
+const StyledCell = (props) => {
+  return (
+    <TableCell variant="head">
+      <Typography variant="h5" sx={{ fontSize: { xs: "10px", md: "20px" } }}>
+        {props.children}
+      </Typography>
+    </TableCell>
+  );
+};
 
 export default MemberTableHead;
