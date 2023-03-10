@@ -16,6 +16,7 @@ export const editFilter = (usersSelector, compareValue2) => {
   });
 };
 
+// filter if two value not equal
 export const filterNotEqual = (usersSelector, name, compareValue2) => {
   return usersSelector.filter((filteredProfile) => {
     return filteredProfile[name] !== compareValue2;
@@ -35,4 +36,25 @@ export const checkBoxChecker = (checkedState, index) => {
       return el;
     }
   });
+};
+
+// get admin or member count
+export const getCount = (usersSelector, value1, value2) => {
+  return usersSelector.filter((el) => {
+    return el[`${value1}`] === value2;
+  }).length;
+};
+
+// filter delete all by check box
+export const deleteAll = (newHomeProf, checkedState) => {
+  // array contain deleted items
+  const arr = [];
+  newHomeProf.forEach((prof, index) => {
+    checkedState.forEach((ch, ind) => {
+      if (ch === true && ind === index) {
+        arr.push(prof);
+      }
+    });
+  });
+  return arr;
 };

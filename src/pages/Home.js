@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { Container } from "@mui/material";
-import { users, setUsers } from "./redux/mainSlice";
+import { users, setUsers } from "../redux/mainSlice";
 import { useDispatch, useSelector } from "react-redux";
-import "./home.css";
-import NavBar from "./components/NavBar";
-import SearchSection from "./components/SearchSection";
-import MemberTable from "./components/MemberTable";
+import "../assets/css/home.css";
+import NavBar from "../components/general/NavBar";
+import SearchSection from "../components/search section/SearchSection";
+import MemberTable from "../components/Table/MemberTable";
 
 function Home(profiles) {
   // ### main state

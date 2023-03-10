@@ -1,7 +1,7 @@
 import "./App.css";
 import { Routes, Route } from "react-router-dom";
 import axios from "axios";
-import Home from "./Home";
+import Home from "./pages/Home";
 import { useEffect, useState } from "react";
 import { Provider } from "react-redux";
 import store from "./store";
